@@ -23,6 +23,20 @@ class MongoConnectionFactory implements FactoryInterface
 
     public function createService(ServiceLocatorInterface $services)
     {
+        $config = $serviceLocator->get('Config');
+
+        if (isset($config['phlymongo']) && isset($config['phlymongo']['connection'])) {
+            
+            if (isset($config['phlymongo']['connection']['server'])) {
+                $this->server = $config['phlymongo']['connection']['server'];
+            }
+
+            if (isset($config['phlymongo']['connection']['server'])) {
+                $this->options = $config['phlymongo']['connection']['options'];
+            }
+
+        }
+
         return new Mongo($this->server, $this->options);
     }
 }
