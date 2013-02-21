@@ -2,7 +2,7 @@
 
 namespace PhlyMongo;
 
-use Mongo
+use Mongo;
 use MongoDB;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -12,7 +12,7 @@ class MongoDbFactory implements FactoryInterface
     protected $dbName;
     protected $connectionService;
 
-    public function __construct(Mongo $connectionService, $dbName = null)
+    public function __construct($connectionService, $dbName = null)
     {
         $this->dbName            = $dbName;
         $this->connectionService = $connectionService;
@@ -21,13 +21,15 @@ class MongoDbFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $services)
     {
 
-        $config = $serviceLocator->get('Config');
+        $config = $services->get('Config');
 
         if (isset($config['phlymongo']) && isset($config['phlymongo']['database'])) {
             $this->dbName = $config['phlymongo']['database'];
         }
 
+
         $connection = $services->get($this->connectionService);
+
         return new MongoDB($connection, $this->dbName);
     }
 }

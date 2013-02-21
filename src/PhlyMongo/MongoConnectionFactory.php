@@ -23,7 +23,7 @@ class MongoConnectionFactory implements FactoryInterface
 
     public function createService(ServiceLocatorInterface $services)
     {
-        $config = $serviceLocator->get('Config');
+        $config = $services->get('Config');
 
         if (isset($config['phlymongo']) && isset($config['phlymongo']['connection'])) {
             
@@ -31,7 +31,7 @@ class MongoConnectionFactory implements FactoryInterface
                 $this->server = $config['phlymongo']['connection']['server'];
             }
 
-            if (isset($config['phlymongo']['connection']['server'])) {
+            if (isset($config['phlymongo']['connection']['options'])) {
                 $this->options = $config['phlymongo']['connection']['options'];
             }
 
