@@ -1,0 +1,26 @@
+<?php
+
+return array(
+	
+	'service_manager' => array(
+		'factories' => array(
+
+			'Application\Mongo\Connection' => function($sm){
+                $factory = new PhlyMongo\MongoConnectionFactory();
+                return $factory->createService($sm);
+			},
+			'Application\Mongo\Database' => function($sm){
+				$factory = new PhlyMongo\MongoDbFactory('Application\Mongo\Connection');
+                return $factory->createService($sm);
+			}
+		)
+	),
+
+	'phlymongo' => array(
+		'connection' => array(
+			'server' => 'mongodb://localhost:27017'
+		),
+		'database' => 'my_mongo_database'
+	)
+
+);
